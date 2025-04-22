@@ -78,11 +78,11 @@ CONFIG_COMMAND_UPLC_OBJECT_RPC_NODE_NAME = "UPLC_OBJECT_RPC_NODE_NAME"
 
 ###############################################################################
 #
-# POZOR! Kljucne besede protokola morajo biti enake kot v KrkaMaster64
+# POZOR! Kljucne besede protokola morajo biti enake kot v FaustoMaster64
 #
 ###############################################################################
 
-# ukazi za komunikacijo med KrkaMaster in KrkaSlave aplikacijo
+# ukazi za komunikacijo med FaustoMaster in FaustoSlave aplikacijo
 PROTOCOL_COMMAND_REG = "REG"
 PROTOCOL_COMMAND_SET_IR = "SIR"
 PROTOCOL_COMMAND_SET_REACTOR_VARS = "SRV"
@@ -107,7 +107,7 @@ PROTOCOL_RESULT_PROTOCOL_ERROR = "PER"
 
 # privzete nastavitve
 DEFAULT_LABVISION_DLL_FILENAME = "C:\\HiTec\\bin\\AppIntf.dll"
-DEFAULT_LABVISION_PROJECT_NAME = "KRKA_INTERFACE_V2"
+DEFAULT_LABVISION_PROJECT_NAME = "FAUSTO_INTERFACE_V2"
 
 
 DEFAULT_IR_SERVER_URL = "opc.tcp://localhost:62552/iCOpcUaServer"
@@ -514,7 +514,7 @@ class App:
         if FAKE_UPLC:
             self.fake_uplc_sample_completed = False
 
-        # TCP komunikacija s KrkaMaster64
+        # TCP komunikacija s FaustoMaster64
         self.host = DEFAULT_SLAVE_HOST
         self.port = DEFAULT_SLAVE_PORT
         self.listener = None
@@ -979,7 +979,7 @@ class App:
         logger.debug(logtext)
 
         if FAKE_UPLC:
-            resp_json = "[{\"Id\":\"9f08332c-449c-4f55-b2f1-48bf3f8d0e77\",\"Name\":\"Coff_Checkout\",\"CreatedTimeUtc\":\"2023-07-07T07:41:54.714894Z\",\"ExperimentState\":\"Aborted\"},{\"Id\":\"ed0b1e40-00e6-4f8d-b3a2-575040265dcf\",\"Name\":\"aciliranje 1\",\"CreatedTimeUtc\":\"2023-08-21T11:39:06.1427652Z\",\"ExperimentState\":\"Completed\"},{\"Id\":\"d8166275-a1eb-482e-8815-dcba47c5d85f\",\"Name\":\"aciliranje 1 - Copy\",\"CreatedTimeUtc\":\"2023-08-28T10:17:46.6406248Z\",\"ExperimentState\":\"Aborted\"},{\"Id\":\"08bc5140-fe33-4f84-b9d4-3301cabb1050\",\"Name\":\"aciliranje 1 - Copy\",\"CreatedTimeUtc\":\"2023-08-28T10:17:55.2235655Z\",\"ExperimentState\":\"Completed\"},{\"Id\":\"6e87b6e2-56b7-4f4c-a2a3-f66f21abbbae\",\"Name\":\"Test KrkaAI\",\"CreatedTimeUtc\":\"2023-09-29T08:45:30.4251608Z\",\"ExperimentState\":\"Created\"},{\"Id\":\"74d717f5-5599-4286-a686-cb738f927d12\",\"Name\":\"Test KrkaAI\",\"CreatedTimeUtc\":\"2023-09-29T08:46:40.18252Z\",\"ExperimentState\":\"Created\"},{\"Id\":\"fc56d00d-fb1c-4791-aa87-9774263a4285\",\"Name\":\"Test KrkaAI\",\"CreatedTimeUtc\":\"2023-09-29T08:48:06.3937933Z\",\"ExperimentState\":\"Created\"},{\"Id\":\"2ac346a7-425b-4979-820f-7035cab76069\",\"Name\":\"Test KrkaAI\",\"CreatedTimeUtc\":\"2023-09-29T08:49:47.9338152Z\",\"ExperimentState\":\"Created\"},{\"Id\":\"a6b46bee-5ddf-4bf7-9a59-ec2e8ef171ef\",\"Name\":\"Test KrkaAI\",\"CreatedTimeUtc\":\"2023-09-29T08:53:43.4519482Z\",\"ExperimentState\":\"Created\"},{\"Id\":\"77aa1db0-cb60-4ed9-964f-0d5583985fd0\",\"Name\":\"Krka AI TEST 2\",\"CreatedTimeUtc\":\"2023-09-29T08:58:42.5738154Z\",\"ExperimentState\":\"Created\"},{\"Id\":\"3749992c-0f12-4437-8422-61a9654539e6\",\"Name\":\"aciliranje 1\",\"CreatedTimeUtc\":\"2023-09-29T09:01:52.9148152Z\",\"ExperimentState\":\"Created\"},{\"Id\":\"7da75d93-834a-432e-8044-b666bec6c7bf\",\"Name\":\"Test KrkaAI\",\"CreatedTimeUtc\":\"2023-09-29T09:13:01.6353903Z\",\"ExperimentState\":\"Aborted\"},{\"Id\":\"0a11b222-c7e9-43eb-8800-b778d6b013d3\",\"Name\":\"Test KrkaAI\",\"CreatedTimeUtc\":\"2023-09-29T09:15:57.3982068Z\",\"ExperimentState\":\"Execution\"}]"
+            resp_json = "[{\"Id\":\"9f08332c-449c-4f55-b2f1-48bf3f8d0e77\",\"Name\":\"Coff_Checkout\",\"CreatedTimeUtc\":\"2023-07-07T07:41:54.714894Z\",\"ExperimentState\":\"Aborted\"},{\"Id\":\"ed0b1e40-00e6-4f8d-b3a2-575040265dcf\",\"Name\":\"aciliranje 1\",\"CreatedTimeUtc\":\"2023-08-21T11:39:06.1427652Z\",\"ExperimentState\":\"Completed\"},{\"Id\":\"d8166275-a1eb-482e-8815-dcba47c5d85f\",\"Name\":\"aciliranje 1 - Copy\",\"CreatedTimeUtc\":\"2023-08-28T10:17:46.6406248Z\",\"ExperimentState\":\"Aborted\"},{\"Id\":\"08bc5140-fe33-4f84-b9d4-3301cabb1050\",\"Name\":\"aciliranje 1 - Copy\",\"CreatedTimeUtc\":\"2023-08-28T10:17:55.2235655Z\",\"ExperimentState\":\"Completed\"},{\"Id\":\"6e87b6e2-56b7-4f4c-a2a3-f66f21abbbae\",\"Name\":\"Test FaustoAI\",\"CreatedTimeUtc\":\"2023-09-29T08:45:30.4251608Z\",\"ExperimentState\":\"Created\"},{\"Id\":\"74d717f5-5599-4286-a686-cb738f927d12\",\"Name\":\"Test FaustoAI\",\"CreatedTimeUtc\":\"2023-09-29T08:46:40.18252Z\",\"ExperimentState\":\"Created\"},{\"Id\":\"fc56d00d-fb1c-4791-aa87-9774263a4285\",\"Name\":\"Test FaustoAI\",\"CreatedTimeUtc\":\"2023-09-29T08:48:06.3937933Z\",\"ExperimentState\":\"Created\"},{\"Id\":\"2ac346a7-425b-4979-820f-7035cab76069\",\"Name\":\"Test FaustoAI\",\"CreatedTimeUtc\":\"2023-09-29T08:49:47.9338152Z\",\"ExperimentState\":\"Created\"},{\"Id\":\"a6b46bee-5ddf-4bf7-9a59-ec2e8ef171ef\",\"Name\":\"Test FaustoAI\",\"CreatedTimeUtc\":\"2023-09-29T08:53:43.4519482Z\",\"ExperimentState\":\"Created\"},{\"Id\":\"77aa1db0-cb60-4ed9-964f-0d5583985fd0\",\"Name\":\"Fausto AI TEST 2\",\"CreatedTimeUtc\":\"2023-09-29T08:58:42.5738154Z\",\"ExperimentState\":\"Created\"},{\"Id\":\"3749992c-0f12-4437-8422-61a9654539e6\",\"Name\":\"aciliranje 1\",\"CreatedTimeUtc\":\"2023-09-29T09:01:52.9148152Z\",\"ExperimentState\":\"Created\"},{\"Id\":\"7da75d93-834a-432e-8044-b666bec6c7bf\",\"Name\":\"Test FaustoAI\",\"CreatedTimeUtc\":\"2023-09-29T09:13:01.6353903Z\",\"ExperimentState\":\"Aborted\"},{\"Id\":\"0a11b222-c7e9-43eb-8800-b778d6b013d3\",\"Name\":\"Test FaustoAI\",\"CreatedTimeUtc\":\"2023-09-29T09:15:57.3982068Z\",\"ExperimentState\":\"Execution\"}]"
         else:
             resp_json = self.uplc_objRPC.call_method(self.uplc_method_GetExperiments, None)
 
@@ -1264,11 +1264,11 @@ class App:
                 self.master_id = master_id
                 #TODO inicializacija vseh nastavitev ir
                 self.listener.set_response(id, f"{request_num}:{master_id}:{PROTOCOL_RESULT_OK}")
-                logtext = f"Registracija KrkaMaster64 aplikacije (id={master_id})."
+                logtext = f"Registracija FaustoMaster64 aplikacije (id={master_id})."
                 logger.info(logtext)
             elif master_id != self.master_id:
                 self.listener.set_response(id, f"{request_num}:{master_id}:{PROTOCOL_RESULT_PROTOCOL_ERROR}")
-                logtext = f"Prejem ukaza od neregistrirane KrkaMaster64 aplikacije (id={master_id})."
+                logtext = f"Prejem ukaza od neregistrirane FaustoMaster64 aplikacije (id={master_id})."
                 logger.warning(logtext)
             elif command == PROTOCOL_COMMAND_SET_IR:
                 cur_ir_target_peaks = None
@@ -1360,7 +1360,7 @@ class App:
         self.listener.process_socket_events()
         conn_id, request = self.listener.get_request()
 
-        # preveri, ali smo prejeli zahtevo od KrkaMaster64 aplikacije
+        # preveri, ali smo prejeli zahtevo od FaustoMaster64 aplikacije
         if request is not None:
             self.parse_request(conn_id, request)
 
@@ -1404,7 +1404,7 @@ if __name__ == "__main__":
 
     logger = get_slave_logger()
     logger.setLevel(logging.INFO)
-    logger.info("Zaganjanje KrkaSlave aplikacije.")
+    logger.info("Zaganjanje FaustoSlave aplikacije.")
 
     app = App()
     app.start_processing()
@@ -1418,4 +1418,4 @@ if __name__ == "__main__":
         app.shut_down()
 
     logger.setLevel(logging.INFO)
-    logger.info("Zapiranje KrkaSlave aplikacije.")
+    logger.info("Zapiranje FaustoSlave aplikacije.")
