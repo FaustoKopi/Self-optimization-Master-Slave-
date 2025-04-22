@@ -39,7 +39,7 @@ THREAD_MSG_RESULT = 2
 THREAD_MSG_INFO = 3
 
 # stanja master programa
-STATE_REGISTER = 1  # prvo javljanje programu KrkaSlave (sporoci id za komunikacijo)
+STATE_REGISTER = 1  # prvo javljanje programu FaustoSlave (sporoci id za komunikacijo)
 STATE_SET_IR_SETTINGS = 2  # doloci valovne dolzine, ki jih IR spremlja, ter parametre za ugotavljanje stabilnosti reakcije
 STATE_DESIGN_NEW_EXPERIMENT = 3  # master program izbere nastavitve za naslednji eksperiment (sistematicno ali z optimizacijo)
 STATE_INITIATE_NEW_EXPERIMENT = 4  # master sporoci slave programu nastavitve za izvedbo novega eksperimenta
@@ -98,7 +98,7 @@ DEFAULT_MAX_STABILIZATION_TIME = 50
 DEFAULT_MAX_EXPERIMENT_ANALYSIS_TIME = 3600
 DEFAULT_SLAVE_RESPONSE_TIMEOUT = 5
 
-DEFAULT_CSV_FOLDER = "C:\\KrkaIT\\Master\\"
+DEFAULT_CSV_FOLDER = "C:\\FaustoIT\\Master\\"
 DEFAULT_IR_SLOPE_MEASUREMENTS = 5
 DEFAULT_IR_SLOPE_THRESHOLD = 5.0
 DEFAULT_SLAVE_HOST = "127.0.0.1"
@@ -120,7 +120,7 @@ DEFAULT_TSEMO_GA_NUM_OF_GENERATIONS = 100
 DEFAULT_TSEMO_ITERATION_BATCH_SIZE = 1
 DEFAULT_TSEMO_BACKUP_STEPS = 2
 
-# rezervirane vrednosti za komunikacijo KrkaMater-OptimizerThread
+# rezervirane vrednosti za komunikacijo FaustoMater-OptimizerThread
 
 OPTIMIZATION_FINISHED = "OPT_FIN"
 
@@ -136,11 +136,11 @@ TEXT_QUIT ="Konec"
 
 ###############################################################################
 #
-# POZOR! Kljucne besede protokola morajo biti enake kot v KrkaSlave32
+# POZOR! Kljucne besede protokola morajo biti enake kot v FaustoSlave32
 #
 ###############################################################################
 
-# ukazi za komunikacijo med KrkaMaster in KrkaSlave aplikacijo
+# ukazi za komunikacijo med FaustoMaster in FaustoSlave aplikacijo
 PROTOCOL_COMMAND_REG = "REG"
 PROTOCOL_COMMAND_SET_IR = "SIR"
 PROTOCOL_COMMAND_SET_REACTOR_VARS = "SRV"
@@ -1579,7 +1579,7 @@ def test_fun(x, size):
 
 ##############################################################################################################
 #
-# KrkaMaster64
+# FaustoMaster64
 #
 ##############################################################################################################
 
@@ -1965,7 +1965,7 @@ class App:
 
         # Glavno okno aplikacije
         self.window = parent
-        self.window.title("KrkaMaster")
+        self.window.title("FaustoMaster")
         self.window.protocol("WM_DELETE_WINDOW", self.close_window)
         self.window.minsize(800, 400)
 
@@ -2796,25 +2796,25 @@ class App:
 
             if request_num == self.request_num and master_id == self.master_id:
                 if result == PROTOCOL_RESULT_PROTOCOL_ERROR:
-                    logtext = "Napaka v komunikaciji s KrkaSlave aplikacijo (Protocol error)."
+                    logtext = "Napaka v komunikaciji s FaustoSlave aplikacijo (Protocol error)."
                     logger.warning(logtext)
                     self.add_text_to_log_window(logtext, "yellow", True)
                     self.state = STATE_REGISTER
 
                 elif result == PROTOCOL_RESULT_SYNTAX_ERROR:
-                    logtext = "Napaka v komunikaciji s KrkaSlave aplikacijo (Syntax error)."
+                    logtext = "Napaka v komunikaciji s FaustoSlave aplikacijo (Syntax error)."
                     logger.warning(logtext)
                     self.add_text_to_log_window(logtext, "yellow", True)
                     # TODO: kaj v tem primeru? Za enkrat se isti ukaz ponovi...
 
                 elif self.state == STATE_REGISTER and result == PROTOCOL_RESULT_OK:
-                    logtext = "Uspesna registracija na KrkaSlave aplikaciji."
+                    logtext = "Uspesna registracija na FaustoSlave aplikaciji."
                     logger.info(logtext)
                     self.add_text_to_log_window(logtext, "white", True)
                     self.state = STATE_SET_IR_SETTINGS
 
                 elif self.state == STATE_SET_IR_SETTINGS and result == PROTOCOL_RESULT_OK:
-                    logtext = "Nastavitve za IR uspesno poslane KrkaSlave aplikaciji."
+                    logtext = "Nastavitve za IR uspesno poslane FaustoSlave aplikaciji."
                     logger.info(logtext)
                     self.add_text_to_log_window(logtext, "white", True)
                     if self.next_experiment_parameters is None:
@@ -2823,7 +2823,7 @@ class App:
                         self.state = STATE_INITIATE_NEW_EXPERIMENT
 
                 elif self.state == STATE_INITIATE_NEW_EXPERIMENT and result == PROTOCOL_RESULT_OK:
-                    logtext = "Nastavitve parametrov za izvedbo eksperimenta uspesno poslane KrkaSlave aplikaciji."
+                    logtext = "Nastavitve parametrov za izvedbo eksperimenta uspesno poslane FaustoSlave aplikaciji."
                     logger.info(logtext)
                     self.add_text_to_log_window(logtext, "white", True)
                     self.waiting_experiment_stability_start_time = time.time()
@@ -2839,7 +2839,7 @@ class App:
                     self.ir_stabilized = stable
 
                 elif self.state == STATE_INITIATE_EXPERIMENT_ANALYSIS and result == PROTOCOL_RESULT_OK:
-                    logtext = "Zahteva za izvedbo analize eksperimenta uspesno poslane KrkaSlave aplikaciji."
+                    logtext = "Zahteva za izvedbo analize eksperimenta uspesno poslane FaustoSlave aplikaciji."
                     logger.info(logtext)
                     self.add_text_to_log_window(logtext, "white", True)
                     self.waiting_experiment_analysis_start_time = time.time()
@@ -2872,7 +2872,7 @@ class App:
 
                     self.uplc_analysis_done = analysis_done
             else:
-                logtext = "Prejet odgovor od KrkaSlave aplikacije izven konteksta."
+                logtext = "Prejet odgovor od FaustoSlave aplikacije izven konteksta."
                 logger.warning(logtext)
                 self.add_text_to_log_window(logtext, "yellow", True)
                 self.state = STATE_REGISTER
@@ -2889,7 +2889,7 @@ class App:
         if self.tcp_client is not None:
             connected, response = self.tcp_client.process_socket_events()
 
-            # preveri, ali smo prejeli odgovor od KrkaSlave32 aplikacije
+            # preveri, ali smo prejeli odgovor od FaustoSlave32 aplikacije
             if response is not None:
                 self.process_received_response(response)
                 self.waiting_for_response = False
@@ -3228,7 +3228,7 @@ if __name__ == "__main__":
 
     logger = get_master_logger()
     logger.setLevel(logging.INFO)
-    logger.info("Zaganjanje KrkaMaster64 aplikacije.")
+    logger.info("Zaganjanje FaustoMaster64 aplikacije.")
 
     root = tk.Tk()
     app = App(root)
@@ -3237,4 +3237,4 @@ if __name__ == "__main__":
     app.shut_down()
 
     logger.setLevel(logging.INFO)
-    logger.info("Zapiranje KrkaMaster64 aplikacije.")
+    logger.info("Zapiranje FaustoMaster64 aplikacije.")
